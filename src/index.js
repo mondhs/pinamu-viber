@@ -15,6 +15,9 @@ var request = require('request');
 const express = require('express');
 const app = express();
 
+// contains relative URL path, like: "/viber/webhook"
+const webhookUrl = process.env.WEBHOOK_URL;
+
 
 function createLogger() {
     const logger = new winston.Logger({
@@ -97,7 +100,7 @@ const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
     console.log(`Application running on port: ${port}`);
-    bot.setWebhook(`${process.env.PINAMU_HEROKU_URL}`).catch(error => {
+    bot.setWebhook(`${process.env.PINAMU_HEROKU_URL}${webhookUrl}`).catch(error => {
       console.log('Can not set webhook on following server. Is it running?');
       console.error(error);
       process.exit(1);
